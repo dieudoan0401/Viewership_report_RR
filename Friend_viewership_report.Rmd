@@ -59,8 +59,16 @@ friends_season <- tibble(
 ) |>
   mutate(
     change_m = if_else(season == 1, 0, avg_viewers_m - lag(avg_viewers_m)),
-    pct_change = if_else(season == 1, 0, 100 * change_m / lag(avg_viewers_m))
+    pct_change = if_else(season == 1, 0, 100 * change_m / lag(avg_viewers_m)),
+    change_m = round(change_m, 1),
+    pct_change = round(pct_change, 2)
   )
+
+knitr::kable(
+  friends_season,
+  col.names = c("Season", "Average viewers (M)", "Change (M)", "Percent change"),
+  caption = "Season-level viewership summary for Friends"
+)
 ```
 
 ```{r}
