@@ -80,3 +80,8 @@ pre, code {
   color: #6c757d;
   font-size: 0.9rem;
 }
+
+p {
+  text-align: justify;
+  text-justify: inter-word;
+}

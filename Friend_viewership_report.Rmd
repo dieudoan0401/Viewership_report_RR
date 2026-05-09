@@ -50,6 +50,14 @@ Kauffman and Crane began developing Friends under the working title Insomnia Caf
 
 All ten seasons of Friends ranked within the top ten of the final television season ratings; ultimately reaching the number 1 spot in its eighth season. The series finale aired on May 6, 2004, and was watched by around 52.5 million American viewers, making it the fifth-most-watched series finale in American television history and the most-watched television episode of the 2000s. Friends received acclaim throughout its run, becoming one of the most popular and highest-grossing television shows of all time. The show's success led to a spin-off series, Joey, and a reunion special, Friends: The Reunion.
 
+
+**The finale Episode**
+The series's creators completed the first draft of the hour-long finale in January 2004, four months before its original airing. Crane, Kauffman and Bright watched the finales of other sitcoms to prepare the episode's outline, paying attention to what worked and what did not. They liked the ones that stayed true to the series, deeming "The Last Show", the finale of The Mary Tyler Moore Show to be the gold standard. Crane, Kauffman, and Bright had difficulty writing the finale. They did not want to do "something high concept, or take the show out of the show."The most critical parts of the finale were shot without an audience and with a minimum number of crew members. The main cast enjoyed the finale and were confident that the fans would react similarly:
+
+"It's exactly what I had hoped. We all end up with a sense of a new beginning and the audience has a sense that it's a new chapter in the lives of all these characters" — David Schwimmer on the series finale.
+
+NBC heavily promoted the series finale, which was preceded by weeks of media hype.[63] Local NBC affiliates organized viewing parties around the U.S., including an event at Universal CityWalk featuring a special broadcast of the finale on an outdoor Astrovision screen.[64] The finale was the subject of two episodes of Dateline NBC, one of which ran for two hours. A one-hour retrospective of clips from previous episodes was shown before the airing of the episode. Following the finale, The Tonight Show with Jay Leno was filmed on the set of the Friends' Central Perk coffee house, which featured the cast as guests. The advertising rates for the finale averaged 2 million for 30 seconds of commercial time, breaking the record held by the Seinfeld finale at 1.7 million.
+
 # Statistical Summary
 
 While the most-watched single episode is "The One After the Super Bowl in Season 2 with staggering 31.7 million viewers per episode, Season 8 is still ranked #1 in all of television for the year with the highly popular for "the Ross and Rachel Pregnancy"
@@ -69,7 +77,7 @@ knitr::kable(
 )
 ```
 
-The average number of viewers for all original episodes, broadcast during the television season in the series' regular timeslot. 
+The average number of viewers for all original episodes, broadcast during the television season in the series' regular time slot. 
 
 ```{r}
 friends_season <- tibble(
@@ -86,7 +94,7 @@ friends_season <- tibble(
 knitr::kable(
   friends_season,
   col.names = c("Season", "Average viewers (M)", "Change (M)", "Percent change"),
-  caption = " for Friends"
+  caption = "Season-to-Season Change in Viewership"
 )
 ```
 
@@ -131,3 +139,11 @@ ggplot(friends_season, aes(x = factor(season), y = change_m, fill = change_m > 0
   )
 ```
 
+# References
+*The report has AI-assisted wording and the content from Wikipedia*
+
+1. Wikipedia contributors. *Friends*.  
+   <https://en.wikipedia.org/wiki/Friends>
+
+2. Wikipedia contributors. *List of Friends episodes*.  
+   <https://en.wikipedia.org/wiki/List_of_Friends_episodes>
