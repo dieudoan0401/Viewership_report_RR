@@ -52,10 +52,29 @@ All ten seasons of Friends ranked within the top ten of the final television sea
 
 # Statistical Summary
 
+While the most-watched single episode is "The One After the Super Bowl in Season 2 with staggering 31.7 million viewers per episode, Season 8 is still ranked #1 in all of television for the year with the highly popular for "the Ross and Rachel Pregnancy"
+```{r}
+friends_season1 <- tibble(
+  season = 1:10,
+  episodes = c(24,24,25,24,24,25,24,24,24,28),
+  rank = c(8,3,4,4,2,5,5,1,2,5),
+  rating = c(15.6,18.7,16.8,16.1,15.7,14.0,12.6,15.0,13.5,13.6),
+  viewers_m = c(24.8,31.7,26.1,25.0,24.7,23.0,22.1,26.7,23.9,26.1)
+) 
+
+knitr::kable(
+  friends_season1,
+  col.names = c("Season", "Episodes", "Rank", "Rating","Viewers (millions)"),
+  caption = "Peak Viewership for Friends"
+)
+```
+
+The average number of viewers for all original episodes, broadcast during the television season in the series' regular timeslot. 
+
 ```{r}
 friends_season <- tibble(
   season = 1:10,
-  avg_viewers_m = c(24.3, 31.0, 26.0, 24.8, 24.8, 23.0, 21.4, 26.3, 23.8, 26.8)
+  avg_viewers_m = c(24.3, 30.0, 24.9, 24.0, 23.5, 20.7, 20.2, 24.5, 21.8, 22.8)
 ) |>
   mutate(
     change_m = if_else(season == 1, 0, avg_viewers_m - lag(avg_viewers_m)),
@@ -67,29 +86,48 @@ friends_season <- tibble(
 knitr::kable(
   friends_season,
   col.names = c("Season", "Average viewers (M)", "Change (M)", "Percent change"),
-  caption = "Season-level viewership summary for Friends"
+  caption = " for Friends"
 )
 ```
 
+# Viewership Over Time
 ```{r}
-max_season <- friends_season |> slice_max(avg_viewers_m, n = 1)
-min_season <- friends_season |> slice_min(avg_viewers_m, n = 1)
-
-stats_tbl <- tibble(
-  Statistic = c(
-    "Number of seasons",
-    "Highest season average",
-    "Lowest season average",
-    "Change from season 1 to season 10"
-  ),
-  Value = c(
-    nrow(friends_season),
-    glue("{number(max_season$avg_viewers_m, accuracy = 0.1)} million (Season {max_season$season})"),
-    glue("{number(min_season$avg_viewers_m, accuracy = 0.1)} million (Season {min_season$season})"),
-    glue("{number(friends_season$avg_viewers_m - friends_season$avg_viewers_m, accuracy = 0.1)} million")[6][5]
+ggplot(friends_season1, aes(x = season, y = viewers_m)) +
+  geom_line(color = "#1f4e79", linewidth = 1.2) +
+  geom_point(color = "#d24d57", size = 3.2) +
+  scale_x_continuous(breaks = 1:10) +
+  scale_y_continuous(labels = label_number(suffix = "M")) +
+  labs(
+    title = "Average Viewership by Season",
+    subtitle = "Season-level averages for Friends",
+    x = "Season",
+    y = "Average viewers"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(color = "gray40")
   )
-)
+```
 
-kable(stats_tbl, align = c("l", "l"))
+Starting with a massive viewership explosion in Season 2. Despite several years of steady decline through the middle of its run, the chart shows a significant resurgence in Season 8 and a final uptick in Season 10 as the series concluded. These shifts highlight how Friends managed to reclaim its massive cultural momentum even after a decade on the air.
+
+```{r}
+ggplot(friends_season, aes(x = factor(season), y = change_m, fill = change_m > 0)) +
+  geom_col(width = 0.72, show.legend = FALSE) +
+  geom_hline(yintercept = 0, color = "black", linewidth = 0.5) +
+  scale_fill_manual(values = c("TRUE" = "#2e8b57", "FALSE" = "#b03a2e")) +
+  scale_y_continuous(labels = label_number(suffix = "M")) +
+  labs(
+    title = "Season-to-Season Change in Viewership",
+    subtitle = "Positive and negative shifts relative to the previous season",
+    x = "Season",
+    y = "Difference in average viewers"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(color = "gray40")
+  )
 ```
 
